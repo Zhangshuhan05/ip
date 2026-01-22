@@ -13,6 +13,15 @@ public class Charmie {
         System.out.println();
     } // for easy calling of the add task messages
 
+    private static void delTaskMsg(String line, String indent, Task task, int taskCount) {
+        System.out.println(line);
+        System.out.println(indent +  "Noted. I've removed this task:");
+        System.out.println(indent + "  " + task.getString());
+        System.out.println(indent + "Now you have " + taskCount + " tasks in the list.");
+        System.out.println(line);
+        System.out.println();
+    } // for easy calling of the add task messages
+
 
     public static void main(String[] args) {
         String INDENT = "    ";
@@ -83,6 +92,16 @@ public class Charmie {
                     Event event = new Event(description, start, end);
                     list.add(event);
                     addTaskMsg(line, INDENT, event, list.size());
+                } else if (instruction.equals("delete")) {
+                    int index = inputScanner.nextInt() - 1;
+                    if (index >= 0 && index < list.size()) {
+                        Task toDel = list.get(index);
+                        list.remove(index);
+                        delTaskMsg(line, INDENT, toDel, list.size());
+                    } else {
+                        throw new CharmieException("Invalid number, try again.");
+                    }
+
                 } else if (instruction.equals("mark")) {
                     int index = inputScanner.nextInt() - 1;
                     if (index >= 0 && index < list.size()) {
