@@ -45,6 +45,20 @@ public class Charmie {
                     System.out.println("invalid task number, pls try again");
                     System.out.println();
                 }
+            } else if (instruction.equals("unmark")) {
+                int index = inputScanner.nextInt() - 1;
+                if (index >= 0 && index < list.size()) {
+                    Task toUnMark = list.get(index);
+                    toUnMark.unMark();
+                    System.out.println(INDENT + "____________________________________________________________");
+                    System.out.println(INDENT + "OKY, I've marked this task as not done yet:");
+                    System.out.println(INDENT + "[" + toUnMark.getStatusIcon() + "]" + toUnMark.description);
+                    System.out.println(INDENT + "____________________________________________________________");
+                    System.out.println();
+                } else {
+                    System.out.println("invalid task number, pls try again");
+                    System.out.println();
+                }
             } else {
                 Task newTask = new Task(input);
                 list.add(newTask);
