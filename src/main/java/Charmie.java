@@ -30,19 +30,7 @@ public class Charmie {
         String line = INDENT + "____________________________________________________________";
 
         TaskList tasks = new TaskList();
-
-        /*Storage storage = new Storage(PATH);
-        TaskList tasks = new TaskList();
-
-        // --- 2. Load tasks from file (try-catch so it won't crash) ---
-        try {
-            List<Task> loadedTasks = storage.loadTasks();
-            for (Task t : loadedTasks) {
-                tasks.add(t);
-            }
-        } catch (IOException e) {
-            System.out.println(INDENT + "Oops! Failed to load tasks. Starting with an empty list.");
-        }*/
+        tasks.loadFromFile();
 
         System.out.println(line);
         System.out.println(INDENT + "Hello! I'm Charmie");
@@ -81,6 +69,7 @@ public class Charmie {
 
                     ToDo toDo = new ToDo(task);
                     tasks.addTask(toDo);
+                    tasks.saveToDatabase();
                     addTaskMsg(line, INDENT, toDo, tasks.getSize());
                 } else if (instruction.equals("deadline")) {
                     String task = inputScanner.hasNextLine() ? inputScanner.nextLine().trim() : "";
@@ -93,6 +82,7 @@ public class Charmie {
 
                     Deadline deadline = new Deadline(description, by);
                     tasks.addTask(deadline);
+                    tasks.saveToDatabase();
                     addTaskMsg(line, INDENT, deadline, tasks.getSize());
                 } else if (instruction.equals("event")) {
                     String task = inputScanner.hasNextLine() ? inputScanner.nextLine().trim() : "";
@@ -106,12 +96,14 @@ public class Charmie {
 
                     Event event = new Event(description, start, end);
                     tasks.addTask(event);
+                    tasks.saveToDatabase();
                     addTaskMsg(line, INDENT, event, tasks.getSize());
                 } else if (instruction.equals("delete")) {
                     int index = inputScanner.nextInt() - 1;
                     if (index >= 0 && index < tasks.getSize()) {
                         Task toDel = tasks.getTask(index);
                         tasks.removeTask(index);
+                        tasks.saveToDatabase();
                         delTaskMsg(line, INDENT, toDel, tasks.getSize());
                     } else {
                         throw new CharmieException("Invalid number, try again.");
@@ -121,6 +113,7 @@ public class Charmie {
                     int index = inputScanner.nextInt() - 1;
                     if (index >= 0 && index < tasks.getSize()) {
                         Task marked = tasks.markTask(index);
+                        tasks.saveToDatabase();
                         System.out.println(line);
                         System.out.println(INDENT + "Nicee! I've marked this task as done:");
                         System.out.println(INDENT + marked.getString()); // !!
@@ -133,6 +126,7 @@ public class Charmie {
                     int index = inputScanner.nextInt() - 1;
                     if (index >= 0 && index < tasks.getSize()) {
                         Task unmarked = tasks.unmarkTask(index);
+                        tasks.saveToDatabase();
                         System.out.println(line);
                         System.out.println(INDENT + "OKY, I've marked this task as not done yet:");
                         System.out.println(INDENT + "[" + unmarked.getStatusIcon() + "]" + unmarked.description);
