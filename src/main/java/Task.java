@@ -1,4 +1,4 @@
-public class Task {
+abstract public class Task {
     protected String description;
     protected boolean isDone;
 
@@ -27,5 +27,7 @@ public class Task {
     public String getString() {
         return "[" + getStatusIcon() + "] " + description;
     }
+
+    public abstract String saveToTaskList();
 
 }

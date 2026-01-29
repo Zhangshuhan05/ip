@@ -1,8 +1,10 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.IOException;
 
 public class Charmie {
+    private static final String PATH = "data/duke.txt";
 
     private static void addTaskMsg(String line, String indent, Task task, int taskCount) {
         System.out.println(line);
@@ -25,9 +27,10 @@ public class Charmie {
 
     public static void main(String[] args) {
         String INDENT = "    ";
-        List<Task> list = new ArrayList<>();
-
         String line = INDENT + "____________________________________________________________";
+
+        TaskList tasks = new TaskList();
+        tasks.loadFromFile();
 
         System.out.println(line);
         System.out.println(INDENT + "Hello! I'm Charmie");
@@ -35,6 +38,7 @@ public class Charmie {
         System.out.println(line);
         System.out.println();
         Scanner reader = new Scanner(System.in);
+
         while (true) {
             try {
                 String input = reader.nextLine();
@@ -50,8 +54,8 @@ public class Charmie {
                 } else if (instruction.equals("list")) {
                     System.out.println(line);
                     System.out.println(INDENT + "Here are the tasks in your list:");
-                    for (int i = 0; i < list.size(); i++) {
-                        Task task = list.get(i);
+                    for (int i = 0; i < tasks.getSize(); i++) {
+                        Task task = tasks.getTask(i);
                         System.out.print(INDENT + (i + 1) + ".");
                         System.out.println(task.getString());
                     }
@@ -63,10 +67,10 @@ public class Charmie {
                         throw new CharmieException("OOPS!!! The description of a todo cannot be empty :(");
                     }
 
-
-                    ToDos toDo = new ToDos(task);
-                    list.add(toDo);
-                    addTaskMsg(line, INDENT, toDo, list.size());
+                    ToDo toDo = new ToDo(task);
+                    tasks.addTask(toDo);
+                    tasks.saveToDatabase();
+                    addTaskMsg(line, INDENT, toDo, tasks.getSize());
                 } else if (instruction.equals("deadline")) {
                     String task = inputScanner.hasNextLine() ? inputScanner.nextLine().trim() : "";
                     String[] params = task.split("/by", 2);
@@ -77,8 +81,9 @@ public class Charmie {
                     String by = params[1].trim();
 
                     Deadline deadline = new Deadline(description, by);
-                    list.add(deadline);
-                    addTaskMsg(line, INDENT, deadline, list.size());
+                    tasks.addTask(deadline);
+                    tasks.saveToDatabase();
+                    addTaskMsg(line, INDENT, deadline, tasks.getSize());
                 } else if (instruction.equals("event")) {
                     String task = inputScanner.hasNextLine() ? inputScanner.nextLine().trim() : "";
                     String[] params = task.split("/", 3);
@@ -90,26 +95,28 @@ public class Charmie {
                     String end = params[2].trim();
 
                     Event event = new Event(description, start, end);
-                    list.add(event);
-                    addTaskMsg(line, INDENT, event, list.size());
+                    tasks.addTask(event);
+                    tasks.saveToDatabase();
+                    addTaskMsg(line, INDENT, event, tasks.getSize());
                 } else if (instruction.equals("delete")) {
                     int index = inputScanner.nextInt() - 1;
-                    if (index >= 0 && index < list.size()) {
-                        Task toDel = list.get(index);
-                        list.remove(index);
-                        delTaskMsg(line, INDENT, toDel, list.size());
+                    if (index >= 0 && index < tasks.getSize()) {
+                        Task toDel = tasks.getTask(index);
+                        tasks.removeTask(index);
+                        tasks.saveToDatabase();
+                        delTaskMsg(line, INDENT, toDel, tasks.getSize());
                     } else {
                         throw new CharmieException("Invalid number, try again.");
                     }
 
                 } else if (instruction.equals("mark")) {
                     int index = inputScanner.nextInt() - 1;
-                    if (index >= 0 && index < list.size()) {
-                        Task toMark = list.get(index);
-                        toMark.markAsDone();
+                    if (index >= 0 && index < tasks.getSize()) {
+                        Task marked = tasks.markTask(index);
+                        tasks.saveToDatabase();
                         System.out.println(line);
                         System.out.println(INDENT + "Nicee! I've marked this task as done:");
-                        System.out.println(INDENT + toMark.getString()); // !!
+                        System.out.println(INDENT + marked.getString()); // !!
                         System.out.println(line);
                         System.out.println();
                     } else {
@@ -117,12 +124,12 @@ public class Charmie {
                     }
                 } else if (instruction.equals("unmark")) {
                     int index = inputScanner.nextInt() - 1;
-                    if (index >= 0 && index < list.size()) {
-                        Task toUnMark = list.get(index);
-                        toUnMark.unMark();
+                    if (index >= 0 && index < tasks.getSize()) {
+                        Task unmarked = tasks.unmarkTask(index);
+                        tasks.saveToDatabase();
                         System.out.println(line);
                         System.out.println(INDENT + "OKY, I've marked this task as not done yet:");
-                        System.out.println(INDENT + "[" + toUnMark.getStatusIcon() + "]" + toUnMark.description);
+                        System.out.println(INDENT + "[" + unmarked.getStatusIcon() + "]" + unmarked.description);
                         System.out.println(line);
                         System.out.println();
                     } else {
