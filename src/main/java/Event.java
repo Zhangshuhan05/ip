@@ -12,4 +12,9 @@ public class Event extends Task {
     public String getString() {
         return "[E]" + "[" + getStatusIcon() + "] " + description + " (from: " + start + " to: " + end + ")";
     }
+
+    @Override
+    public String saveToTaskList() {
+        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + start + " " + end;
+    }
 }

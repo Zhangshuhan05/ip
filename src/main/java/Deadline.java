@@ -10,4 +10,9 @@ public class Deadline extends Task {
     public String getString() {
         return "[D]" + "[" + getStatusIcon() + "] " + description + " (by: " + by + ")";
     }
+
+    @Override
+    public String saveToTaskList() {
+        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by;
+    }
 }
