@@ -64,6 +64,32 @@ public class TaskList {
         try (Scanner s = new Scanner(file)) {
             while (s.hasNextLine()) {
                 String line = s.nextLine();
+                String[] parts = line.split("\\s*\\|\\s*");
+                if (parts.length < 3) continue;
+                String type = parts[0];
+                boolean done = parts[1].equals("1");
+                String desc = parts[2];
+
+                switch (type) {
+                    case "T":
+                        ToDo todo = new ToDo(desc);
+                        if (done) todo.markAsDone();
+                        list.add(todo);
+                        break;
+                    case "D":
+                        if (parts.length < 4) continue;
+                        Deadline d = new Deadline(desc, parts[3]);
+                        if (done) d.markAsDone();
+                        list.add(d);
+                        break;
+                    case "E":
+                        if (parts.length < 4) continue;
+                        String[] times = parts[3].split(",", 2);
+                        Event e = new Event(desc, times[0], times.length > 1 ? times[1] : "");
+                        if (done) e.markAsDone();
+                        list.add(e);
+                        break;
+                }
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
