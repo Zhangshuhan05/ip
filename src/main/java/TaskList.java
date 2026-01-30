@@ -1,6 +1,7 @@
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.*;
+import java.util.Scanner;
 import java.io.*;
 
 public class TaskList {
@@ -72,6 +73,7 @@ public class TaskList {
 
                 switch (type) {
                     case "T":
+                        if (parts.length < 3) continue;
                         ToDo todo = new ToDo(desc);
                         if (done) todo.markAsDone();
                         list.add(todo);
@@ -83,15 +85,16 @@ public class TaskList {
                         list.add(d);
                         break;
                     case "E":
-                        if (parts.length < 4) continue;
-                        String[] times = parts[3].split(",", 2);
-                        Event e = new Event(desc, times[0], times.length > 1 ? times[1] : "");
+                        if (parts.length < 4) continue; // at least 4 fields
+                        String[] times = parts[3].split(" ", 2); // split start and end
+                        if (times.length < 2) continue; // skip if missing end
+                        Event e = new Event(desc, times[0], times[1]);
                         if (done) e.markAsDone();
                         list.add(e);
                         break;
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
