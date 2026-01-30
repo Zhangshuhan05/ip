@@ -91,8 +91,8 @@ public class Charmie {
                         throw new CharmieException("OOPS!!! I need more details for your event :(");
                     }
                     String description = params[0].trim();
-                    String start = params[1].trim();
-                    String end = params[2].trim();
+                    String start = params[1].trim().substring(5).trim();
+                    String end = params[2].trim().substring(3).trim();
 
                     Event event = new Event(description, start, end);
                     tasks.addTask(event);

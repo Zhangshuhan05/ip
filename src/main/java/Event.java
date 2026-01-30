@@ -9,7 +9,7 @@ public class Event extends Task {
 
     private static final DateTimeFormatter[] INPUT_FORMATS = {
             DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
-            DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm"),
+            //DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm"),
             DateTimeFormatter.ofPattern("yyyy-MM-dd"),
             DateTimeFormatter.ISO_LOCAL_DATE_TIME
     };
