@@ -1,4 +1,3 @@
-//charmie output with users
 import java.util.Scanner;
 
 public class Ui {

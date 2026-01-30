@@ -38,8 +38,43 @@ public class Parser {
                 return new Event(desc, from, to);
 
             default:
-                return null; // non-task commands
+                return null;
         }
     }
+
+    public static Task parseTaskFromFile(String line) {
+        String[] parts = line.split("\\s*\\|\\s*");
+        if (parts.length < 3) return null;
+
+        String type = parts[0];
+        boolean done = parts[1].equals("1");
+        String desc = parts[2];
+
+        Task task = null;
+
+        switch (type) {
+            case "T":
+                task = new ToDo(desc);
+                break;
+            case "D":
+                if (parts.length < 4) return null;
+                task = new Deadline(desc, parts[3]);
+                break;
+            case "E":
+                if (parts.length < 4) return null;
+                String[] times = parts[3].split(" ", 2);
+                if (times.length < 2) return null;
+                task = new Event(desc, times[0], times[1]);
+                break;
+            default:
+                return null;
+        }
+
+        if (done) {
+            task.markAsDone();
+        }
+        return task;
+    }
+
 }
 
