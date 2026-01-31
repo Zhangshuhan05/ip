@@ -1,3 +1,8 @@
+package Charmie;
+
+import Charmie.task.Task;
+import Charmie.task.TaskList;
+
 import java.util.Scanner;
 
 public class Ui {
@@ -18,7 +23,7 @@ public class Ui {
 
     public static void welcomeMsg() {
         System.out.println(LINE);
-        System.out.println(INDENT + "Hello! I'm Charmie");
+        System.out.println(INDENT + "Hello! I'm Charmie.Charmie");
         System.out.println(INDENT + "What can I do for you? ;)");
         System.out.println(LINE);
         System.out.println();
@@ -70,7 +75,7 @@ public class Ui {
     public static void unmarkTaskMsg(Task task) {
         System.out.println(LINE);
         System.out.println(INDENT + "OKY, I've marked this task as not done yet:");
-        System.out.println(INDENT + "[" + task.getStatusIcon() + "]" + task.description);
+        System.out.println(INDENT + "[" + task.getStatusIcon() + "]" + task.getDescription());
         System.out.println(LINE);
         System.out.println();
     }

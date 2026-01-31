@@ -1,3 +1,9 @@
+package Charmie;
+
+import Charmie.task.Task;
+import Charmie.task.TaskList;
+
+
 import java.io.IOException;
 
 public class Charmie {

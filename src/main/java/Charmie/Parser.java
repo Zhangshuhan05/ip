@@ -1,3 +1,10 @@
+package Charmie;
+
+import Charmie.task.Deadline;
+import Charmie.task.Event;
+import Charmie.task.Task;
+import Charmie.task.ToDo;
+
 public class Parser {
 
     public static String getInstruction(String input) {

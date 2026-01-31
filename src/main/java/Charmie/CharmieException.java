@@ -1,3 +1,5 @@
+package Charmie;
+
 public class CharmieException extends Exception {
 
     public CharmieException(String message) {
