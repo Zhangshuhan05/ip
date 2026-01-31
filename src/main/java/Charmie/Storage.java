@@ -1,3 +1,8 @@
+package Charmie;
+
+import Charmie.task.Task;
+import Charmie.task.TaskList;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

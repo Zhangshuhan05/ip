@@ -1,3 +1,5 @@
+package Charmie.task;
+
 abstract public class Task {
     protected String description;
     protected boolean isDone;
@@ -22,6 +24,10 @@ abstract public class Task {
 
     public void unMark() {
         isDone = false;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public String getString() {
