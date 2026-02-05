@@ -19,7 +19,7 @@ public class Event extends Task {
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy hh:mma");
 
 
-    Event(String description, String start, String end) {
+    public Event(String description, String start, String end) {
         super(description);
         this.start = parseDateTime(start.trim());
         this.end = parseDateTime(end.trim());

@@ -16,7 +16,7 @@ public class Deadline extends Task {
     };
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy hh:mma");
 
-    Deadline(String description, String by) throws IllegalArgumentException {
+    public Deadline(String description, String by) throws IllegalArgumentException {
         super(description);
         this.by = parseDateTime(by);
     }
