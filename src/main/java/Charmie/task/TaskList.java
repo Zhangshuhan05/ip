@@ -2,7 +2,9 @@ package Charmie.task;
 
 import java.util.List;
 import java.util.ArrayList;
-
+/**
+ * Class TaskList manages a list of tasks
+ * */
 public class TaskList {
     private List<Task> list;
 
