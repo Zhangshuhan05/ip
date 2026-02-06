@@ -4,7 +4,9 @@ import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-
+/**
+ * Child class Deadline represents a deadline task with a due date/time
+ * */
 public class Deadline extends Task {
     protected LocalDateTime by;
 

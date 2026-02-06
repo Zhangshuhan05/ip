@@ -1,5 +1,7 @@
 package Charmie.task;
-
+/**
+ * Abstract class Task represents a general task with a description and completion status
+ * */
 abstract public class Task {
     protected String description;
     protected boolean isDone;
