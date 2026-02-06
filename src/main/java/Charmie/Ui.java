@@ -96,7 +96,7 @@ public class Ui {
             System.out.println(INDENT + "Here are the matching tasks in your list:");
             int count = 1;
             for (Task task : matches) {
-                System.out.println(INDENT + count + "." + task);
+                System.out.println(INDENT + count + "." + task.getString());
                 count++;
             }
         }
