@@ -5,6 +5,7 @@ import Charmie.task.TaskList;
 
 
 import java.io.IOException;
+import java.util.List;
 
 public class Charmie {
 
@@ -85,7 +86,14 @@ public class Charmie {
                         } else {
                             throw new CharmieException("Invalid number, try again.");
                         }
-                        break;
+                case "find":
+                    if (details.isEmpty()) {
+                        throw new CharmieException("OOPS!!! The search keyword cannot be empty :(");
+                    }
+                    List<Task> matches = tasks.findTasks(details);
+                    charmieUi.findTasksMsg(matches, details);
+                    break;
+
                     default:
                         Task task = Parser.parseTask(instruction, details);
                         if (task == null) {

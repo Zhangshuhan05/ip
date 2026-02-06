@@ -3,6 +3,7 @@ package Charmie;
 import Charmie.task.Task;
 import Charmie.task.TaskList;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Ui {
@@ -85,6 +86,21 @@ public class Ui {
         System.out.println(INDENT + e.getMessage());
         System.out.println(LINE);
         System.out.println();
+    }
+
+    public void findTasksMsg(List<Task> matches, String keyword) {
+        System.out.println(LINE);
+        if (matches.isEmpty()) {
+            System.out.println(INDENT + "No tasks found matching \"" + keyword + "\"");
+        } else {
+            System.out.println(INDENT + "Here are the matching tasks in your list:");
+            int count = 1;
+            for (Task task : matches) {
+                System.out.println(INDENT + count + "." + task);
+                count++;
+            }
+        }
+        System.out.println(LINE);
     }
 }
 
