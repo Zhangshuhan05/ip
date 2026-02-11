@@ -1,5 +1,6 @@
-package Charmie;
+package Charmie.Parser;
 
+import Charmie.Exception.CharmieException;
 import Charmie.task.Deadline;
 import Charmie.task.Event;
 import Charmie.task.Task;

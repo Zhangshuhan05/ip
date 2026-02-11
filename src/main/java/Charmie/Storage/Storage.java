@@ -1,5 +1,6 @@
-package Charmie;
+package Charmie.Storage;
 
+import Charmie.Parser.Parser;
 import Charmie.task.Task;
 import Charmie.task.TaskList;
 

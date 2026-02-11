@@ -1,4 +1,4 @@
-package Charmie;
+package Charmie.Ui;
 
 import Charmie.task.Task;
 import Charmie.task.TaskList;
