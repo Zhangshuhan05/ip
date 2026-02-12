@@ -1,4 +1,4 @@
-package Charmie;
+package Charmie.Exception;
 
 public class CharmieException extends Exception {
 

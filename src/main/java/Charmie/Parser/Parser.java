@@ -1,9 +1,18 @@
-package Charmie;
+package Charmie.Parser;
 
+import Charmie.Exception.CharmieException;
 import Charmie.task.Deadline;
 import Charmie.task.Event;
 import Charmie.task.Task;
 import Charmie.task.ToDo;
+import Charmie.Command.Command;
+import Charmie.Command.AddCommand;
+import Charmie.Command.DeleteCommand;
+import Charmie.Command.ListCommand;
+import Charmie.Command.MarkCommand;
+import Charmie.Command.UnmarkCommand;
+import Charmie.Command.ExitCommand;
+import Charmie.Command.FindCommand;
 
 public class Parser {
 
@@ -16,6 +25,54 @@ public class Parser {
         String[] split = input.trim().split(" ", 2);
         return split.length > 1 ? split[1] : "";
     }
+
+    private static int parseIndex(String details) throws CharmieException {
+        try {
+            return Integer.parseInt(details);
+        } catch (NumberFormatException e) {
+            throw new CharmieException("Please give a valid task number.");
+        }
+    }
+
+
+    public static Command parse(String input) throws CharmieException {
+
+        String instruction = getInstruction(input);
+        String details = getDetails(input);
+
+        switch (instruction) {
+
+        case "bye":
+            return new ExitCommand();
+
+        case "list":
+            return new ListCommand();
+
+        case "delete":
+            return new DeleteCommand(parseIndex(details));
+
+        case "mark":
+            return new MarkCommand(parseIndex(details));
+
+        case "unmark":
+            return new UnmarkCommand(parseIndex(details));
+
+        case "find":
+            return new FindCommand(details);
+
+        default:
+            Task task = parseTask(instruction, details);
+
+            if (task == null) {
+                throw new CharmieException(
+                        "OOPS!!! I don't know what that means :-("
+                );
+            }
+
+            return new AddCommand(task);
+        }
+    }
+
 
     public static Task parseTask(String instruction, String details)
             throws CharmieException {

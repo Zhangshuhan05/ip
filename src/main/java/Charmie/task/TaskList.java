@@ -2,6 +2,7 @@ package Charmie.task;
 
 import java.util.List;
 import java.util.ArrayList;
+
 /**
  * Class TaskList manages a list of tasks
  * */
@@ -9,6 +10,7 @@ public class TaskList {
     private List<Task> list;
 
     public TaskList() {
+
         this.list = new ArrayList<>();
     }
 
@@ -29,14 +31,17 @@ public class TaskList {
     }
 
     public void removeTask(int index) {
+
         this.list.remove(index);
     }
 
     public int getSize() {
+
         return this.list.size();
     }
 
     public Task getTask(int index) {
+
         return this.list.get(index);
     }
 
