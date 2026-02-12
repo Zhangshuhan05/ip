@@ -14,7 +14,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-    private Charmie charmie = new Charmie();
+    private Charmie charmie = new Charmie("./data/charmie.txt");
 
     @Override
     public void start(Stage stage) {

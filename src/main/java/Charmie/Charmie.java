@@ -38,13 +38,28 @@ public class Charmie {
                 String fullCommand = ui.readCommand().trim();
 
                 Command c = Parser.parse(fullCommand);
-                c.run(tasks, ui, storage);
+                String response = c.run(tasks, ui, storage);
+                System.out.println(response);
                 isExit = c.isExit();
 
             } catch (CharmieException e) {
-                ui.showException(e);
+                System.out.println(ui.showException(e));
             }
         }
+
+    }
+
+    public String getResponse(String input) {
+        try {
+            Command c = Parser.parse(input);
+            return c.run(tasks, ui, storage);
+        } catch (CharmieException e) {
+            return e.getMessage();
+        }
+    }
+
+    public String getWelcomeMessage() {
+        return ui.welcomeMsg();
     }
 
     public static void main(String[] args) {

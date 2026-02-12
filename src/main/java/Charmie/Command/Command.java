@@ -12,7 +12,7 @@ import Charmie.task.TaskList;
 public abstract class Command {
     protected boolean isExit = false;
 
-    abstract public void run(TaskList Tasks, Ui ui, Storage storage) throws CharmieException;
+    abstract public String run(TaskList Tasks, Ui ui, Storage storage) throws CharmieException;
 
     public boolean isExit() {
 

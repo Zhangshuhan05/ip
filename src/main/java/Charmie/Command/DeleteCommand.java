@@ -40,15 +40,16 @@ public class DeleteCommand extends Command {
      * @param ui      The Ui instance used to display messages to the user.
      * @param storage The Storage instance used to save the updated task list.
      */
-    public void run(TaskList tasks, Ui ui, Storage storage) {
-        Task taskToDelete = tasks.getTask(index); // save task before removing
+    public String run(TaskList tasks, Ui ui, Storage storage) {
+        Task taskToDelete = tasks.getTask(index);
         tasks.removeTask(index);
-        ui.delTaskMsg(taskToDelete, tasks.getSize());
         try {
             storage.saveToFile(tasks);
         } catch (IOException e) {
-            ui.showException(e);
+            return ui.showException(e);
         }
+
+        return ui.delTaskMsg(taskToDelete, tasks.getSize());
     }
 
     /**

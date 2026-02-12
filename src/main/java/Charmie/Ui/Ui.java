@@ -6,14 +6,26 @@ import Charmie.task.TaskList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Ui class handles the formatting of messages for the Charmie chatbot.
+ * All methods now return Strings, so commands can use them directly for
+ * console or GUI display.
+ */
 public class Ui {
-    private final static String INDENT = "    ";
     private final Scanner scanner;
 
+    /**
+     * Constructs a new Ui instance with a Scanner for reading user input.
+     */
     public Ui() {
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Reads a line of user input from the console.
+     *
+     * @return the input line, or empty string if none
+     */
     public String readCommand() {
         if (scanner.hasNextLine()) {
             return scanner.nextLine();
@@ -21,68 +33,64 @@ public class Ui {
         return "";
     }
 
-    public static void welcomeMsg() {
-        System.out.println("Hello! I'm Charmie.Charmie");
-        System.out.println("What can I do for you? ;)");
+    /** Returns the welcome message. */
+    public String welcomeMsg() {
+        return "Hello! I'm Charmie.\nWhat can I do for you? ;)";
     }
 
-    public static void goodbyeMsg() {
-        System.out.println("Byee. Hope to see you again soon!");
+    /** Returns the goodbye message. */
+    public String goodbyeMsg() {
+        return "Bye! Hope to see you again soon!";
     }
 
-    public static void listTasks(TaskList tasklist) {
-        //System.out.println(LINE);
-        System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < tasklist.getSize(); i++) {
-            Task task = tasklist.getTask(i);
-            System.out.print(INDENT + (i + 1) + ".");
-            System.out.println(task.getString());
+    /** Returns the message when a task is added. */
+    public String addTaskMsg(Task task, int taskCount) {
+        return "Got it. I've added this task:\n  " + task.getString() +
+                "\nNow you have " + taskCount + " tasks in the list.";
+    }
+
+    /** Returns the message when a task is deleted. */
+    public String delTaskMsg(Task task, int taskCount) {
+        return "Noted. I've removed this task:\n  " + task.getString() +
+                "\nNow you have " + taskCount + " tasks in the list.";
+    }
+
+    /** Returns the message when a task is marked as done. */
+    public String markTaskMsg(Task task) {
+
+        return "Nice! I've marked this task as done:\n  "
+                + task.getString();
+    }
+
+    /** Returns the message when a task is unmarked (not done). */
+    public String unmarkTaskMsg(Task task) {
+
+        return "OKY, I've marked this task as not done yet:\n  ["
+                + task.getStatusIcon() + "] " + task.getDescription();
+    }
+
+    /** Returns a formatted string of all tasks in the TaskList. */
+    public String listTasks(TaskList tasks) {
+        if (tasks.getSize() == 0) return "Your task list is empty.";
+        StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
+        for (int i = 0; i < tasks.getSize(); i++) {
+            sb.append(i + 1).append(".").append(tasks.getTask(i).getString()).append("\n");
         }
-        System.out.println();
-    }
-    public static void addTaskMsg(Task task, int taskCount) {
-        System.out.println("Got it. I've added this task:");
-        System.out.println(INDENT + "  " + task.getString());
-        System.out.println("Now you have " + taskCount + " tasks in the list.");
-        System.out.println();
+        return sb.toString().trim();
     }
 
-    public static void delTaskMsg(Task task, int taskCount) {
-        System.out.println("Noted. I've removed this task:");
-        System.out.println(INDENT + "  " + task.getString());
-        System.out.println("Now you have " + taskCount + " tasks in the list.");
-        System.out.println();
-    }
-
-    public static void markTaskMsg(Task task) {
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(INDENT + "  " + task.getString());
-        System.out.println();
-    }
-
-    public static void unmarkTaskMsg(Task task) {
-        System.out.println("OKY, I've marked this task as not done yet:");
-        System.out.println(INDENT + "[" + task.getStatusIcon() + "]" + task.getDescription());
-        System.out.println();
-    }
-
-    public static void showException(Exception e) {
-        System.out.println(e.getMessage());
-        System.out.println();
-    }
-
-    public void findTasksMsg(List<Task> matches, String keyword) {
-        if (matches.isEmpty()) {
-            System.out.println("No tasks found matching \"" + keyword + "\"");
-        } else {
-            System.out.println("Here are the matching tasks in your list:");
-            int count = 1;
-            for (Task task : matches) {
-                System.out.println(INDENT + count + "." + task.getString());
-                count++;
-            }
+    /** Returns a formatted string of tasks that match a search keyword. */
+    public String findTasksMsg(List<Task> matches, String keyword) {
+        if (matches.isEmpty()) return "No tasks found matching \"" + keyword + "\"";
+        StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:\n");
+        for (int i = 0; i < matches.size(); i++) {
+            sb.append(i + 1).append(".").append(matches.get(i).getString()).append("\n");
         }
+        return sb.toString().trim();
+    }
+
+    /** Formats an exception into a string for display. */
+    public String showException(Exception e) {
+        return e.getMessage();
     }
 }
-
-

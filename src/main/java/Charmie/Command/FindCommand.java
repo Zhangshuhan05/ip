@@ -24,12 +24,11 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public void run(TaskList tasks, Ui ui, Storage storage) throws CharmieException{
+    public String run(TaskList tasks, Ui ui, Storage storage) throws CharmieException{
         if (keyword.isEmpty()) {
             throw new CharmieException("OOPS!!! The search keyword cannot be empty :(");
         }
         List<Task> matches = tasks.findTasks(keyword);
-        ui.findTasksMsg(matches, keyword);
+        return ui.findTasksMsg(matches, keyword);
     }
-
 }

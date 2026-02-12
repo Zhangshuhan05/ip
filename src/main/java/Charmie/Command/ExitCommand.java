@@ -33,7 +33,8 @@ public class ExitCommand extends Command {
      * @param storage The storage handler (not used in this command)
      */
     @Override
-    public void run(TaskList tasks, Ui ui, Storage storage) {
-        ui.goodbyeMsg();
+    public String run(TaskList tasks, Ui ui, Storage storage) {
+
+        return ui.goodbyeMsg();
     }
 }

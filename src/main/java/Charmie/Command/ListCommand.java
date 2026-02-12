@@ -13,7 +13,8 @@ public class ListCommand extends Command {
     }
 
     @Override
-    public void run(TaskList tasks, Ui ui, Storage storage) {
-        ui.listTasks(tasks);
+    public String run(TaskList tasks, Ui ui, Storage storage) {
+
+        return ui.listTasks(tasks);
     }
 }

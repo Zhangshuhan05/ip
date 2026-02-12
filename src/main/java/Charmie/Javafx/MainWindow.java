@@ -21,19 +21,24 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
 
-    private Charmie duke;
+    private Charmie charmie;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.jpg"));
     private Image charmieImage = new Image(this.getClass().getResourceAsStream("/images/charmie.jpg"));
 
     @FXML
     public void initialize() {
+
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
     /** Injects the Charmie instance */
     public void setCharmie(Charmie charmie) {
-        charmie = charmie;
+        this.charmie = charmie;
+
+        String welcome = charmie.getWelcomeMessage();
+        dialogContainer.getChildren()
+                .add(DialogBox.getDukeDialog(welcome, charmieImage));
     }
 
     /**

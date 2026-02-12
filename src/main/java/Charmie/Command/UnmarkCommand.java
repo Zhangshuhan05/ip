@@ -12,14 +12,14 @@ public class UnmarkCommand extends Command {
     }
 
     @Override
-    public void run(TaskList tasks, Ui ui, Storage storage) {
+    public String run(TaskList tasks, Ui ui, Storage storage) {
         tasks.unmarkTask(index);
         try {
             storage.saveToFile(tasks);
         } catch (java.io.IOException e) {
-            ui.showException(e);
+            return ui.showException(e);
         }
-        ui.unmarkTaskMsg(tasks.getTask(index));
+        return ui.unmarkTaskMsg(tasks.getTask(index));
     }
 
     @Override
