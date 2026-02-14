@@ -25,9 +25,9 @@
         <property name="message" value='TODO is preferred to FIXME."' />
     </module>
 
-    <module name="SuppressionFilter">
+   <!-- <module name="SuppressionFilter">
         <property name="file" value="${config_loc}/suppressions.xml"/>
-    </module>
+    </module> */ -->
 
     <module name="LineLength">
         <!-- Checks if a line is too long. -->

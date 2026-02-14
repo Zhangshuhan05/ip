@@ -63,5 +63,19 @@ run{
 }
 
 checkstyle {
-    toolVersion = '11.0.0'
+    toolVersion = "10.12.4"
 }
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+    }
+}
+
