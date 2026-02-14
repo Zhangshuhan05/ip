@@ -38,7 +38,9 @@ public class FindCommand extends Command {
         if (keyword.isEmpty()) {
             throw new CharmieException("OOPS!!! The search keyword cannot be empty :(");
         }
+
         List<Task> matches = tasks.findTasks(keyword);
+
         return ui.findTasksMsg(matches, keyword);
     }
 }

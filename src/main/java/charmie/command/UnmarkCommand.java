@@ -20,11 +20,13 @@ public class UnmarkCommand extends Command {
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) {
         tasks.unmarkTask(index);
+
         try {
             storage.saveToFile(tasks);
         } catch (java.io.IOException e) {
             return ui.showException(e);
         }
+
         return ui.unmarkTaskMsg(tasks.getTask(index));
     }
 

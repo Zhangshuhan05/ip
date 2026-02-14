@@ -74,7 +74,6 @@ public class Charmie {
         while (!isExit) {
             try {
                 String fullCommand = ui.readCommand().trim();
-
                 Command c = Parser.parse(fullCommand);
                 assert c != null : "Parsed command should not be null";
 
@@ -83,7 +82,6 @@ public class Charmie {
 
                 System.out.println(response);
                 isExit = c.isExit();
-
             } catch (CharmieException e) {
                 System.out.println(ui.showException(e));
             }
@@ -110,6 +108,7 @@ public class Charmie {
     }
 
     public String getWelcomeMessage() {
+
         return ui.welcomeMsg();
     }
 

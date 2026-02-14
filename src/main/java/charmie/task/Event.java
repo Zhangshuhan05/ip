@@ -49,20 +49,22 @@ public class Event extends Task {
                 }
             }
         }
+
         throw new IllegalArgumentException(
-                "Invalid date format! Use yyyy-MM-dd or yyyy-MM-dd HHmm"
-        );
+            "Invalid date format! Use yyyy-MM-dd or yyyy-MM-dd HHmm");
     }
 
 
     @Override
     public String getString() {
         return "[E]" + "[" + getStatusIcon() + "] " + description
-                + " (from: " + start.format(OUTPUT_FORMAT) + " to: " + end.format(OUTPUT_FORMAT) + ")";
+            + " (from: " + start.format(OUTPUT_FORMAT)
+            + " to: " + end.format(OUTPUT_FORMAT) + ")";
     }
 
     @Override
     public String saveToTaskList() {
-        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + start + " " + end;
+        return "E | " + (isDone ? "1" : "0")
+            + " | " + description + " | " + start + " " + end;
     }
 }

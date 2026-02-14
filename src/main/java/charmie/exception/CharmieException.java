@@ -14,6 +14,7 @@ public class CharmieException extends Exception {
      * @param message the detail message explaining the error
      */
     public CharmieException(String message) {
+
         super(message);
     }
 

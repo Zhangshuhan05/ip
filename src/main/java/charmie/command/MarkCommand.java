@@ -26,11 +26,13 @@ public class MarkCommand extends Command {
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) {
         tasks.markTask(index);
+
         try {
             storage.saveToFile(tasks);
         } catch (java.io.IOException e) {
             return ui.showException(e);
         }
+
         return ui.markTaskMsg(tasks.getTask(index));
     }
 

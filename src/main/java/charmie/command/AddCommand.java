@@ -35,11 +35,13 @@ public class AddCommand extends Command { //
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) {
         tasks.addTask(task);
+
         try {
             storage.saveToFile(tasks);
         } catch (IOException e) {
             ui.showException(e);
         }
+
         return ui.addTaskMsg(task, tasks.getSize());
     }
 
