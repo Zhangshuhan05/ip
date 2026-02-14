@@ -36,6 +36,7 @@ public class TaskList {
     public Task markTask(int index) {
         Task task = getTask(index);
         task.markAsDone();
+
         return task;
     }
 
@@ -48,6 +49,7 @@ public class TaskList {
     public Task unmarkTask(int index) {
         Task task = getTask(index);
         task.unMark();
+
         return task;
     }
 
@@ -79,11 +81,13 @@ public class TaskList {
      */
     public List<Task> findTasks(String keyword) {
         List<Task> matches = new ArrayList<>();
+
         for (Task task : list) {
             if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
                 matches.add(task);
             }
         }
+
         return matches;
     }
 

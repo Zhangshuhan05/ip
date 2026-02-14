@@ -35,11 +35,13 @@ public class Ui {
 
     /** Returns the welcome message. */
     public String welcomeMsg() {
+
         return "Hello! I'm Charmie.\nWhat can I do for you? ;)";
     }
 
     /** Returns the goodbye message. */
     public String goodbyeMsg() {
+
         return "Bye! Hope to see you again soon!";
     }
 
@@ -57,14 +59,12 @@ public class Ui {
 
     /** Returns the message when a task is marked as done. */
     public String markTaskMsg(Task task) {
-
         return "Nice! I've marked this task as done:\n  "
                 + task.getString();
     }
 
     /** Returns the message when a task is unmarked (not done). */
     public String unmarkTaskMsg(Task task) {
-
         return "OKY, I've marked this task as not done yet:\n  ["
                 + task.getStatusIcon() + "] " + task.getDescription();
     }
@@ -75,10 +75,14 @@ public class Ui {
 
             return "Your task list is empty.";
         }
+
         StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
+
         for (int i = 0; i < tasks.getSize(); i++) {
-            sb.append(i + 1).append(".").append(tasks.getTask(i).getString()).append("\n");
+            sb.append(i + 1).append(".")
+                .append(tasks.getTask(i).getString()).append("\n");
         }
+
         return sb.toString().trim();
     }
 
@@ -88,15 +92,20 @@ public class Ui {
 
             return "No tasks found matching \"" + keyword + "\"";
         }
+
         StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:\n");
+
         for (int i = 0; i < matches.size(); i++) {
-            sb.append(i + 1).append(".").append(matches.get(i).getString()).append("\n");
+            sb.append(i + 1).append(".")
+                .append(matches.get(i).getString()).append("\n");
         }
+
         return sb.toString().trim();
     }
 
     /** Formats an exception into a string for display. */
     public String showException(Exception e) {
+
         return e.getMessage();
     }
 }

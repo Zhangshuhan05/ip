@@ -65,15 +65,26 @@ public class Storage {
         }
 
         try (Scanner s = new Scanner(file)) {
-            while (s.hasNextLine()) {
-                String line = s.nextLine();
-                Task task = Parser.parseTaskFromFile(line);
-                if (task != null) {
-                    tasks.addTask(task);
-                }
-            }
+            loadTasks(tasks, s);
         }
+
         return tasks;
     }
+
+
+    private void loadTasks(TaskList tasks, Scanner s) {
+        while (s.hasNextLine()) {
+            addTaskIfValid(tasks, s.nextLine());
+        }
+    }
+
+    private void addTaskIfValid(TaskList tasks, String line) {
+        Task task = Parser.parseTaskFromFile(line);
+        if (task != null) {
+            tasks.addTask(task);
+        }
+    }
+
+
 }
 

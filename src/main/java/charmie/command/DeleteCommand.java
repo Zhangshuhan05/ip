@@ -44,6 +44,7 @@ public class DeleteCommand extends Command {
     public String run(TaskList tasks, Ui ui, Storage storage) {
         Task taskToDelete = tasks.getTask(index);
         tasks.removeTask(index);
+
         try {
             storage.saveToFile(tasks);
         } catch (IOException e) {

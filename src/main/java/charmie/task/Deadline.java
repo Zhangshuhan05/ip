@@ -13,7 +13,8 @@ public class Deadline extends Task {
         DateTimeFormatter.ofPattern("yyyy-MM-dd"),
         DateTimeFormatter.ISO_LOCAL_DATE_TIME
     };
-    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy hh:mma");
+    private static final DateTimeFormatter OUTPUT_FORMAT =
+        DateTimeFormatter.ofPattern("MMM dd yyyy hh:mma");
 
     protected LocalDateTime by;
 
@@ -45,18 +46,20 @@ public class Deadline extends Task {
                 }
             }
         }
+
         throw new IllegalArgumentException(
-                "Invalid date format! Use yyyy-MM-dd or yyyy-MM-dd HHmm"
-        );
+            "Invalid date format! Use yyyy-MM-dd or yyyy-MM-dd HHmm");
     }
 
     @Override
     public String getString() {
-        return "[D]" + "[" + getStatusIcon() + "] " + description + " (by: " + by.format(OUTPUT_FORMAT) + ")";
+        return "[D]" + "[" + getStatusIcon() + "] "
+            + description + " (by: " + by.format(OUTPUT_FORMAT) + ")";
     }
 
     @Override
     public String saveToTaskList() {
-        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by;
+        return "D | "
+            + (isDone ? "1" : "0") + " | " + description + " | " + by;
     }
 }

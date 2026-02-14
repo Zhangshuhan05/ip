@@ -70,12 +70,10 @@ public class Charmie {
         while (!isExit) {
             try {
                 String fullCommand = ui.readCommand().trim();
-
                 Command c = Parser.parse(fullCommand);
                 String response = c.run(tasks, ui, storage);
                 System.out.println(response);
                 isExit = c.isExit();
-
             } catch (CharmieException e) {
                 System.out.println(ui.showException(e));
             }
@@ -102,6 +100,7 @@ public class Charmie {
     }
 
     public String getWelcomeMessage() {
+
         return ui.welcomeMsg();
     }
 
