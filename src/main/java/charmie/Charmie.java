@@ -37,6 +37,10 @@ public class Charmie {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
         this.tasks = loadTasks();
+
+        assert this.ui != null : "UI should be initialized";
+        assert this.storage != null : "Storage should be initialized";
+        assert this.tasks != null : "TaskList should be initialized";
     }
 
     /**
@@ -71,7 +75,11 @@ public class Charmie {
             try {
                 String fullCommand = ui.readCommand().trim();
                 Command c = Parser.parse(fullCommand);
+                assert c != null : "Parsed command should not be null";
+
                 String response = c.run(tasks, ui, storage);
+                assert response != null : "Response should not be null";
+
                 System.out.println(response);
                 isExit = c.isExit();
             } catch (CharmieException e) {

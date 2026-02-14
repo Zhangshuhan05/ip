@@ -55,41 +55,51 @@ public class Parser {
      * @throws CharmieException if the input is invalid or unrecognized
      */
     public static Command parse(String input) throws CharmieException {
+        assert input != null && !input.trim().isEmpty() : "input cannot be null or empty";
 
         String instruction = getInstruction(input);
         String details = getDetails(input);
 
+        assert instruction != null && !instruction.isEmpty() : "instruction should be extracted";
+        assert details != null : "details should never be null";
+
+        Command command = null;
         switch (instruction) {
         case "bye":
-            return new ExitCommand();
+            command = new ExitCommand();
+            break;
 
         case "list":
-            return new ListCommand();
+            command = new ListCommand();
+            break;
 
         case "delete":
-            return new DeleteCommand(parseIndex(details));
+            command = new DeleteCommand(parseIndex(details));
+            break;
 
         case "mark":
-            return new MarkCommand(parseIndex(details));
+            command = new MarkCommand(parseIndex(details));
+
 
         case "unmark":
-            return new UnmarkCommand(parseIndex(details));
+            command = new UnmarkCommand(parseIndex(details));
+            break;
 
         case "find":
-            return new FindCommand(details);
+            command = new FindCommand(details);
+            break;
 
         default:
             Task task = parseTask(instruction, details);
-
             if (task == null) {
-                throw new CharmieException(
-                        "OOPS!!! I don't know what that means :-("
-                );
+                throw new CharmieException("OOPS!!! I don't know what that means :-(");
             }
-
-            return new AddCommand(task);
+            command = new AddCommand(task);
         }
+        assert command != null : "Command should be created";
+        return command;
     }
+
 
 
     /**
@@ -105,13 +115,18 @@ public class Parser {
      * @throws CharmieException if the task details are incomplete or improperly formatted
      */
     public static Task parseTask(String instruction, String details) throws CharmieException {
+        assert instruction != null : "instruction cannot be null";
+        assert details != null : "details cannot be null";
+
+        Task task = null;
         switch (instruction) {
         case "todo":
             if (details.isEmpty()) {
                 throw new CharmieException("OOPS!!! The description of a todo cannot be empty :(");
             }
 
-            return new ToDo(details);
+            task = new ToDo(details);
+            break;
 
         case "deadline":
             String[] d = details.split("/by", 2);
@@ -119,7 +134,8 @@ public class Parser {
                 throw new CharmieException("OOPS!!! I need more details for your deadline :(");
             }
 
-            return new Deadline(d[0].trim(), d[1].trim());
+            task = new Deadline(d[0].trim(), d[1].trim());
+            break;
 
         case "event":
             String[] e = details.split("/", 3);
@@ -131,11 +147,14 @@ public class Parser {
             String from = e[1].replace("from", "").trim();
             String to = e[2].replace("to", "").trim();
 
-            return new Event(desc, from, to);
+            task = new Event(desc, from, to);
+            break;
 
         default:
             return null;
         }
+
+        return task;
     }
 
     /**
@@ -149,6 +168,8 @@ public class Parser {
      * @return the Task object created from the file string, or null if the format is invalid
      */
     public static Task parseTaskFromFile(String line) {
+        assert line != null && !line.isEmpty() : "line cannot be null or empty";
+
         String[] parts = line.split("\\s*\\|\\s*");
 
         if (parts.length < 3) {
@@ -156,12 +177,15 @@ public class Parser {
             return null;
         }
 
+        assert parts[0] != null : "type should not be null";
+        assert parts[1] != null : "done status should not be null";
+        assert parts[2] != null : "description should not be null";
+
         String type = parts[0];
         boolean done = parts[1].equals("1");
         String desc = parts[2];
 
         Task task = null;
-
         switch (type) {
         case "T":
             task = new ToDo(desc);

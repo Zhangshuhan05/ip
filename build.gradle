@@ -50,7 +50,7 @@ test {
 }
 
 application {
-    mainClass.set("Charmie.Javafx.Launcher")
+    mainClass.set("charmie.javafx.Launcher")
 }
 
 shadowJar {
@@ -79,3 +79,6 @@ sourceSets {
     }
 }
 
+tasks.withType(JavaExec) {
+    jvmArgs += "-ea"
+}

@@ -24,8 +24,10 @@ public class Storage {
      * @param filePath the path to the file where tasks will be stored and loaded
      */
     public Storage(String filePath) {
+        assert filePath != null && !filePath.isEmpty() : "filePath cannot be null or empty";
 
         this.file = new File(filePath);
+        assert this.file != null : "File object should be initialised";
     }
 
     /**
@@ -38,11 +40,20 @@ public class Storage {
      * @throws IOException if an I/O error occurs while writing to the file
      */
     public void saveToFile(TaskList tasks) throws IOException {
+        assert tasks != null : "TaskList cannot be null";
+        assert file != null : "File should be initialised";
+
         file.getParentFile().mkdirs();
 
         try (FileWriter fw = new FileWriter(file, false)) {
             for (int i = 0; i < tasks.getSize(); i++) {
-                fw.write(tasks.getTask(i).saveToTaskList());
+                Task task = tasks.getTask(i);
+                assert task != null : "Task at index " + i + " should not be null";
+
+                String taskData = task.saveToTaskList();
+                assert taskData != null : "saveToTaskList() should not return null";
+
+                fw.write(taskData);
                 fw.write(System.lineSeparator());
             }
         }
@@ -59,12 +70,14 @@ public class Storage {
      */
     public TaskList loadFromFile() throws IOException {
         TaskList tasks = new TaskList();
+        assert tasks != null : "TaskList should be initialised";
 
         if (!file.exists()) {
             return tasks;
         }
 
         try (Scanner s = new Scanner(file)) {
+
             loadTasks(tasks, s);
         }
 
