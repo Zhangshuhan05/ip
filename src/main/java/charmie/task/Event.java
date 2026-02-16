@@ -67,4 +67,19 @@ public class Event extends Task {
         return "E | " + (isDone ? "1" : "0")
             + " | " + description + " | " + start + " " + end;
     }
+
+    @Override
+    public Task update(String field, String newValue) {
+        switch (field.toLowerCase()) {
+        case "name":
+            return new Event(newValue, start.toString(), end.toString());
+        case "from":
+            return new Event(description, newValue, end.toString());
+        case "to":
+            return new Event(description, start.toString(), newValue);
+        default:
+            throw new IllegalArgumentException("Invalid field! Valid fields are: description, start, end.");
+        }
+
+    }
 }
