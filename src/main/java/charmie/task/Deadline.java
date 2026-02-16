@@ -62,4 +62,17 @@ public class Deadline extends Task {
         return "D | "
             + (isDone ? "1" : "0") + " | " + description + " | " + by;
     }
+
+    @Override
+    public Task update(String field, String newValue) {
+        switch (field.toLowerCase()) {
+        case "name":
+            return new Deadline(newValue, by.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm")));
+        case "by":
+            return new Deadline(description, newValue);
+        default:
+            throw new IllegalArgumentException("Invalid field for update: " + field);
+        }
+
+    }
 }

@@ -1,5 +1,7 @@
 package charmie.parser;
 
+import javafx.util.Pair;
+
 import charmie.command.AddCommand;
 import charmie.command.Command;
 import charmie.command.DeleteCommand;
@@ -8,6 +10,7 @@ import charmie.command.FindCommand;
 import charmie.command.ListCommand;
 import charmie.command.MarkCommand;
 import charmie.command.UnmarkCommand;
+import charmie.command.UpdateCommand;
 import charmie.exception.CharmieException;
 import charmie.task.Deadline;
 import charmie.task.Event;
@@ -35,13 +38,36 @@ public class Parser {
         return split.length > 1 ? split[1] : "";
     }
 
-    private static int parseIndex(String details) throws CharmieException {
+    private static int getIndex(String details) throws CharmieException {
         try {
             return Integer.parseInt(details) - 1;
         } catch (NumberFormatException e) {
             throw new CharmieException("Please give a valid task number.");
         }
     }
+
+    private static Pair<String, String> getFieldAndValue(String details) throws CharmieException {
+        details = details.trim();
+
+        if (!details.startsWith("/")) {
+            throw new CharmieException("Please provide a valid field starting with '/'");
+        }
+
+        details = details.substring(1);
+
+        String[] parts = details.split(" ", 2);
+
+        if (parts.length == 0 || parts[0].isEmpty()) {
+            throw new CharmieException("Please give a valid field to update.");
+        }
+
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            throw new CharmieException("Please give a valid value to update.");
+        }
+
+        return new Pair<>(parts[0].trim(), parts[1].trim());
+    }
+
 
     /**
      * Parses user input and returns the corresponding Command object.
@@ -74,19 +100,23 @@ public class Parser {
             break;
 
         case "delete":
-            command = new DeleteCommand(parseIndex(details));
+            command = new DeleteCommand(getIndex(details));
             break;
 
         case "mark":
-            command = new MarkCommand(parseIndex(details));
-
+            command = new MarkCommand(getIndex(details));
+            break;
 
         case "unmark":
-            command = new UnmarkCommand(parseIndex(details));
+            command = new UnmarkCommand(getIndex(details));
             break;
 
         case "find":
             command = new FindCommand(details);
+            break;
+
+        case "update":
+            command = new UpdateCommand(getIndex(details), getFieldAndValue(details));
             break;
 
         default:

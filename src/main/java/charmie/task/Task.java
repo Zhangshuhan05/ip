@@ -47,4 +47,6 @@ public abstract class Task {
 
     public abstract String saveToTaskList();
 
+    public abstract Task update(String field, String newValue);
+
 }

@@ -25,5 +25,10 @@ public class ToDo extends Task {
     public String saveToTaskList() {
 
         return "T | " + (isDone ? "1" : "0") + " | " + description;
-    };
+    }
+
+    @Override
+    public Task update(String field, String newValue) {
+        return new ToDo(newValue);
+    }
 }

@@ -108,4 +108,9 @@ public class Ui {
 
         return e.getMessage();
     }
+
+    public String updateTaskMsg(Task oldTask, Task newTask) {
+        return "OKY, I've updated this task:\n  " + oldTask.getString()
+                + "\nto:\n  " + newTask.getString();
+    }
 }

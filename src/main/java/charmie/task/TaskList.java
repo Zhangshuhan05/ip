@@ -28,6 +28,16 @@ public class TaskList {
     }
 
     /**
+     * Removes the task at the specified index from the task list.
+     *
+     * @param index the index of the task to be removed
+     */
+    public void removeTask(int index) {
+
+        this.list.remove(index);
+    }
+
+    /**
      * Marks the task at the specified index as done, setting its completion status to done.
      *
      * @param index the index of the task to be marked as done
@@ -51,16 +61,6 @@ public class TaskList {
         task.unMark();
 
         return task;
-    }
-
-    /**
-     * Removes the task at the specified index from the task list.
-     *
-     * @param index the index of the task to be removed
-     */
-    public void removeTask(int index) {
-
-        this.list.remove(index);
     }
 
     public int getSize() {
@@ -89,6 +89,12 @@ public class TaskList {
         }
 
         return matches;
+    }
+
+    public void updateTask(int index, String field, String newValue) {
+        Task oldTask = this.getTask(index);
+        Task newTask = oldTask.update(field, newValue);
+        list.set(index, newTask);
     }
 
 }
