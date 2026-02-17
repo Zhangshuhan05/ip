@@ -40,6 +40,11 @@ public abstract class Task {
         return description;
     }
 
+    public boolean getDone() {
+
+        return isDone;
+    }
+
     public String getString() {
 
         return "[" + getStatusIcon() + "] " + description;

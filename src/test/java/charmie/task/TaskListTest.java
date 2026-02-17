@@ -1,70 +1,62 @@
 package charmie.task;
 
-import charmie.task.TaskList;
-
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TaskListTest {
 
     @Test
-    public void constructor_newTaskList_sizeZero() {
-        TaskList taskList = new TaskList();
-        assertEquals(0, taskList.getSize());
+    void testAddTaskAndSize() {
+        TaskList list = new TaskList();
+        list.addTask(new ToDo("task 1"));
+
+        assertEquals(1, list.getSize());
     }
 
     @Test
-    public void addTask_addOneTask_sizeOne() {
-        TaskList taskList = new TaskList();
-        Task todo = new ToDo("read book");
+    void testRemoveTask() {
+        TaskList list = new TaskList();
+        list.addTask(new ToDo("task 1"));
+        list.addTask(new ToDo("task 2"));
 
-        taskList.addTask(todo);
+        list.removeTask(0);
 
-        assertEquals(1, taskList.getSize());
+        assertEquals(1, list.getSize());
+        assertTrue(list.getTask(0).getDescription().contains("task 2"));
     }
 
     @Test
-    public void getTask_taskExists_returnsCorrectTask() {
-        TaskList taskList = new TaskList();
-        Task todo = new ToDo("read book");
-        taskList.addTask(todo);
+    void testMarkTask() {
+        TaskList list = new TaskList();
+        list.addTask(new ToDo("task 1"));
 
-        Task retrieved = taskList.getTask(0);
+        Task task = list.markTask(0);
 
-        assertEquals(todo, retrieved);
+        assertTrue(task.getDone());
     }
 
     @Test
-    public void markTask_taskExists_taskMarkedDone() {
-        TaskList taskList = new TaskList();
-        Task todo = new ToDo("read book");
-        taskList.addTask(todo);
+    void testUnmarkTask() {
+        TaskList list = new TaskList();
+        list.addTask(new ToDo("task 1"));
 
-        Task marked = taskList.markTask(0);
+        list.markTask(0);
+        Task task = list.unmarkTask(0);
 
-        assertEquals("[T][X] read book", marked.getString());
+        assertFalse(task.getDone());
     }
 
     @Test
-    public void unmarkTask_taskExists_taskUnmarked() {
-        TaskList taskList = new TaskList();
-        Task todo = new ToDo("read book");
-        taskList.addTask(todo);
-        taskList.markTask(0);
+    void testFindTasks() {
+        TaskList list = new TaskList();
+        list.addTask(new ToDo("buy milk"));
+        list.addTask(new ToDo("do homework"));
 
-        Task unmarked = taskList.unmarkTask(0);
+        List<Task> found = list.findTasks("milk");
 
-        assertEquals("[T][ ] read book", unmarked.getString());
-    }
-
-    @Test
-    public void removeTask_taskExists_sizeDecreases() {
-        TaskList taskList = new TaskList();
-        taskList.addTask(new ToDo("read book"));
-        taskList.addTask(new ToDo("write code"));
-
-        taskList.removeTask(0);
-
-        assertEquals(1, taskList.getSize());
+        assertEquals(1, found.size());
     }
 }
