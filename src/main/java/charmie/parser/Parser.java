@@ -48,16 +48,25 @@ public class Parser {
     private static int getIndex(String details) throws CharmieException {
         String trimmed = details.trim();
 
-        try {
-            int index = Integer.parseInt(trimmed);
-            if (index <= 0) {
-                throw new CharmieException("Please give a valid task number.");
-            }
-            return index - 1;
-        } catch (NumberFormatException e) {
+        if (trimmed.isEmpty()) {
             throw new CharmieException("Please give a valid task number.");
         }
+
+        String indexToken = trimmed.split("\\s+", 2)[0];
+
+        if (!indexToken.matches("\\d+")) {
+            throw new CharmieException("Please give a valid task number.");
+        }
+
+        int index = Integer.parseInt(indexToken);
+
+        if (index <= 0) {
+            throw new CharmieException("Please give a valid task number.");
+        }
+
+        return index - 1;
     }
+
 
     private static Pair<String, String> getFieldAndValue(String details) throws CharmieException {
         String[] split = details.trim().split(" ", 3);
@@ -74,6 +83,10 @@ public class Parser {
         String value = split[2].trim();
 
         if (field.isEmpty()) {
+            throw new CharmieException("Please give a valid field to update.");
+        }
+
+        if (!field.matches("[a-zA-Z0-9]+")) {
             throw new CharmieException("Please give a valid field to update.");
         }
 
