@@ -34,38 +34,50 @@ public class Parser {
 
     public static String getDetails(String input) {
         String[] split = input.trim().split(" ", 2);
+        String details;
 
-        return split.length > 1 ? split[1] : "";
+        if (split.length > 1) {
+            details = split[1];
+        } else {
+            details = "";
+        }
+
+        return details;
     }
 
     private static int getIndex(String details) throws CharmieException {
         try {
-            return Integer.parseInt(details) - 1;
+            String index = details.replaceAll("[^0-9].*", "");
+
+            return Integer.parseInt(index) - 1;
         } catch (NumberFormatException e) {
             throw new CharmieException("Please give a valid task number.");
         }
     }
 
     private static Pair<String, String> getFieldAndValue(String details) throws CharmieException {
-        details = details.trim();
+        String[] split = details.trim().split(" ", 3);
 
-        if (!details.startsWith("/")) {
+        if (split.length < 3) {
+            throw new CharmieException("Please provide a valid update command format: update [index] /[field] [value]");
+        }
+
+        if (!split[1].startsWith("/")) {
             throw new CharmieException("Please provide a valid field starting with '/'");
         }
 
-        details = details.substring(1);
+        String field = split[1].substring(1).trim();
+        String value = split[2].trim();
 
-        String[] parts = details.split(" ", 2);
-
-        if (parts.length == 0 || parts[0].isEmpty()) {
+        if (field.isEmpty()) {
             throw new CharmieException("Please give a valid field to update.");
         }
 
-        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+        if (value.isEmpty()) {
             throw new CharmieException("Please give a valid value to update.");
         }
 
-        return new Pair<>(parts[0].trim(), parts[1].trim());
+        return new Pair<>(field, value);
     }
 
 
