@@ -37,7 +37,7 @@ public class Parser {
         String details;
 
         if (split.length > 1) {
-            details = split[1];
+            details = split[1].trim();
         } else {
             details = "";
         }
@@ -46,10 +46,14 @@ public class Parser {
     }
 
     private static int getIndex(String details) throws CharmieException {
-        try {
-            String index = details.replaceAll("[^0-9].*", "");
+        String trimmed = details.trim();
 
-            return Integer.parseInt(index) - 1;
+        try {
+            int index = Integer.parseInt(trimmed);
+            if (index <= 0) {
+                throw new CharmieException("Please give a valid task number.");
+            }
+            return index - 1;
         } catch (NumberFormatException e) {
             throw new CharmieException("Please give a valid task number.");
         }
@@ -163,7 +167,7 @@ public class Parser {
         Task task = null;
         switch (instruction) {
         case "todo":
-            if (details.isEmpty()) {
+            if (details.trim().isEmpty()) {
                 throw new CharmieException("OOPS!!! The description of a todo cannot be empty :(");
             }
 

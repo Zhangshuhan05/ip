@@ -208,7 +208,7 @@ public class ParserTest {
     @Test
     void testParseTaskFromFileEvent() {
         Task task = Parser.parseTaskFromFile(
-            "E | 0 | meeting | 2pm 3pm");
+            "E | 0 | meeting | 2026-11-25T13:05 2026-12-14T00:00");
         assertNotNull(task);
         assertInstanceOf(Event.class, task);
     }
@@ -348,17 +348,19 @@ public class ParserTest {
 
     @Test
     void testEventWithSpecialCharacters() throws CharmieException {
-        Task task = Parser.parseTask("event", "Team @Meeting /from 2pm /to 3pm");
+        Task task = Parser.parseTask("event", "Team @Meeting /from 2018-03-24 /to 2018-03-25");
         assertInstanceOf(Event.class, task);
     }
 
     @Test
     void testParseTaskEmptyDescription() {
+
         assertThrows(CharmieException.class, () -> Parser.parseTask("todo", ""));
     }
 
     @Test
     void testParseTaskOnlySpaces() {
+
         assertThrows(CharmieException.class, () -> Parser.parseTask("todo", "   "));
     }
 
@@ -404,6 +406,7 @@ public class ParserTest {
     void testLongDescriptionParsing() throws CharmieException {
         String longDesc = "a".repeat(1000);
         Task task = Parser.parseTask("todo", longDesc);
+        assertNotNull(task);
         assertEquals(longDesc, task.getDescription());
     }
 
