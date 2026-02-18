@@ -38,6 +38,7 @@ public class ParserTest {
 
     @Test
     void testGetDetailsExtraSpaces() {
+
         assertEquals("buy milk", Parser.getDetails("todo    buy milk"));
     }
 
@@ -101,7 +102,7 @@ public class ParserTest {
 
     @Test
     void testParseEventCommand() throws CharmieException {
-        Command command = Parser.parse("event meeting /from 2pm /to 3pm");
+        Command command = Parser.parse("event meeting /from 2024-12-31 1400 /to 2024-12-31 1500");
         assertInstanceOf(AddCommand.class, command);
     }
 
@@ -167,7 +168,7 @@ public class ParserTest {
 
     @Test
     void testParseTaskEvent() throws CharmieException {
-        Task task = Parser.parseTask("event", "meeting /from 2pm /to 3pm");
+        Task task = Parser.parseTask("event", "meeting /from 2024-12-31 1400 /to 2024-12-31 1500");
         assertInstanceOf(Event.class, task);
     }
 
@@ -228,5 +229,203 @@ public class ParserTest {
     void testParseTaskFromFileIncompleteEventTime() {
         Task task = Parser.parseTaskFromFile("E | 0 | meeting | onlyOneTime");
         assertNull(task);
+    }
+
+    // ========================
+    // Additional Edge Cases
+    // ========================
+
+    @Test
+    void testGetInstructionEmptyString() {
+        assertEquals("", Parser.getInstruction(""));
+    }
+
+    @Test
+    void testGetInstructionOnlySpaces() {
+        assertEquals("", Parser.getInstruction("   "));
+    }
+
+    @Test
+    void testGetDetailsOnlySpaces() {
+        assertEquals("", Parser.getDetails("   "));
+    }
+
+    @Test
+    void testGetInstructionSpecialCharacters() {
+        assertEquals("@todo", Parser.getInstruction("@todo task"));
+    }
+
+    @Test
+    void testParseToDoEmptyDescription() {
+        assertThrows(CharmieException.class, () -> Parser.parse("todo"));
+    }
+
+    @Test
+    void testParseToDoOnlySpaces() {
+        assertThrows(CharmieException.class, () -> Parser.parse("todo   "));
+    }
+
+    @Test
+    void testParseDeadlineInvalidDateFormat() {
+        assertThrows(IllegalArgumentException.class, () ->
+            Parser.parse("deadline submit /by invalid-date"));
+    }
+
+    @Test
+    void testParseEventInvalidStartDate() {
+        assertThrows(IllegalArgumentException.class, () ->
+            Parser.parse("event meeting /from bad-date /to 2024-12-31 1500"));
+    }
+
+    @Test
+    void testParseEventInvalidEndDate() {
+        assertThrows(IllegalArgumentException.class, () ->
+            Parser.parse("event meeting /from 2024-12-31 1400 /to bad-date"));
+    }
+
+    @Test
+    void testParseEventMissingFrom() {
+        assertThrows(CharmieException.class, () ->
+            Parser.parse("event meeting /to 3pm"));
+    }
+
+    @Test
+    void testParseEventMissingTo() {
+        assertThrows(CharmieException.class, () ->
+            Parser.parse("event meeting /from 2pm"));
+    }
+
+    @Test
+    void testParseDeadlineMissingBy() {
+        assertThrows(CharmieException.class, () ->
+            Parser.parse("deadline submit"));
+    }
+
+    @Test
+    void testUpdateInvalidIndex() {
+        assertThrows(CharmieException.class, () ->
+            Parser.parse("update abc /field value"));
+    }
+
+    @Test
+    void testUpdateIndexWithLetters() {
+        assertThrows(CharmieException.class, () ->
+            Parser.parse("update 1a /field value"));
+    }
+
+    @Test
+    void testUpdateNegativeIndex() {
+        // Should parse successfully but negative index would cause issues later
+        assertThrows(CharmieException.class, () ->
+            Parser.parse("update -1 /field value"));
+    }
+
+    @Test
+    void testDeleteWithExtraDetails() throws CharmieException {
+        // delete command only takes index, extra text should be ignored
+        Command cmd = Parser.parse("delete 1 extra text");
+        assertInstanceOf(DeleteCommand.class, cmd);
+    }
+
+    @Test
+    void testMarkWithExtraDetails() throws CharmieException {
+        Command cmd = Parser.parse("mark 2 extra");
+        assertInstanceOf(MarkCommand.class, cmd);
+    }
+
+    @Test
+    void testToDoWithSpecialCharacters() throws CharmieException {
+        Task task = Parser.parseTask("todo", "Buy @#$%^&*() items!");
+        assertInstanceOf(ToDo.class, task);
+        assertEquals("Buy @#$%^&*() items!", task.getDescription());
+    }
+
+    @Test
+    void testDeadlineWithSpecialCharacters() throws CharmieException {
+        Task task = Parser.parseTask("deadline", "Submit @Report /by 2024-12-31");
+        assertInstanceOf(Deadline.class, task);
+    }
+
+    @Test
+    void testEventWithSpecialCharacters() throws CharmieException {
+        Task task = Parser.parseTask("event", "Team @Meeting /from 2pm /to 3pm");
+        assertInstanceOf(Event.class, task);
+    }
+
+    @Test
+    void testParseTaskEmptyDescription() {
+        assertThrows(CharmieException.class, () -> Parser.parseTask("todo", ""));
+    }
+
+    @Test
+    void testParseTaskOnlySpaces() {
+        assertThrows(CharmieException.class, () -> Parser.parseTask("todo", "   "));
+    }
+
+    @Test
+    void testParseTaskFromFileEmptyLine() {
+        // parseTaskFromFile has an assertion that rejects empty lines
+        assertThrows(AssertionError.class, () ->
+            Parser.parseTaskFromFile(""));
+    }
+
+    @Test
+    void testParseTaskFromFileOnlyPipes() {
+        Task task = Parser.parseTaskFromFile("| | |");
+        assertNull(task);
+    }
+
+    @Test
+    void testParseTaskFromFileExtraSpaces() {
+        Task task = Parser.parseTaskFromFile("T | 0 |   task with spaces   ");
+        assertNotNull(task);
+    }
+
+    @Test
+    void testParseTaskFromFileMixedCase() {
+        Task task = Parser.parseTaskFromFile("t | 0 | task");
+        assertNull(task); // Must be uppercase
+    }
+
+    @Test
+    void testParseTaskFromFileInvalidDoneStatus() {
+        // Parser doesn't strictly validate done status - it accepts any integer
+        Task task = Parser.parseTaskFromFile("T | 2 | task");
+        assertNotNull(task); // Will still parse
+    }
+
+    @Test
+    void testParseDeadlineWithISO8601Format() throws CharmieException {
+        Command cmd = Parser.parse("deadline submit /by 2024-12-31T14:00:00");
+        assertInstanceOf(AddCommand.class, cmd);
+    }
+
+    @Test
+    void testLongDescriptionParsing() throws CharmieException {
+        String longDesc = "a".repeat(1000);
+        Task task = Parser.parseTask("todo", longDesc);
+        assertEquals(longDesc, task.getDescription());
+    }
+
+    @Test
+    void testUpdateWithSpecialCharactersInField() {
+        assertThrows(CharmieException.class, () ->
+            Parser.parse("update 1 /@field value"));
+    }
+
+    @Test
+    void testUpdateFieldWithNumbers() throws CharmieException {
+        // Field names with numbers might work or fail depending on implementation
+        Command cmd = Parser.parse("update 1 /field123 newvalue");
+        assertInstanceOf(UpdateCommand.class, cmd);
+    }
+
+    @Test
+    void testMultipleCommandsWithLeadingTrailingSpaces() throws CharmieException {
+        Command cmd1 = Parser.parse("   list   ");
+        assertInstanceOf(ListCommand.class, cmd1);
+
+        Command cmd2 = Parser.parse("   mark 1   ");
+        assertInstanceOf(MarkCommand.class, cmd2);
     }
 }
