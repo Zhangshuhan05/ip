@@ -14,15 +14,14 @@
          xmlns="http://javafx.com/javafx/17"
          xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <!-- Wrap label in a StackPane to allow background and rounded corners for bubble -->
         <StackPane fx:id="bubbleContainer" styleClass="bubble-container">
             <children>
                 <Label fx:id="dialog" text="Label" wrapText="true" minHeight="-Infinity" styleClass="bubble-text" />
             </children>
         </StackPane>
-        <ImageView fx:id="displayPicture" fitHeight="99.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="displayPicture" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
     </children>
     <padding>
-        <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
     </padding>
 </fx:root>
