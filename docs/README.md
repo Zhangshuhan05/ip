@@ -1,30 +1,65 @@
-# Duke User Guide
+# Charmie User Guide
 
-// Update the title above to match the actual product name
+![Screenshot of Charmie's interface](/docs/Ui.png)
 
-// Product screenshot goes here
+Charmie is friendly cat chatbot that helps you manages your tasks! It can:
 
-// Product intro goes here
+1. Add 3 different types of tasks - Todos, Deadlines and Events
+2. Update the details of the tasks when needed
+3. Mark tasks you have completed
+4. Unmark tasks if wrongly marked
+5. Delete the task when not needed
+6. List down all the tasks you have added
 
-## Adding deadlines
+Such a cool task manager, right? 
+To use Charmie, here is the summary of all of Charmie's power:
 
-// Describe the action and its outcome.
+## Features of Charmie 
 
-// Give examples of usage
+### Add a new task 
+There are 3 different tasks you can ask Charmie to manage for you!
+1. Todos, task that you need to do but don't wanna give yourself a deadline
+Format: ```ToDo [description of task]```
 
-Example: `keyword (optional arguments)`
+2. Deadlines, tasks that you need to do by a fixed timing
+Format: ```Deadline [description of task] /by YYYY-MM-DD HHmm```
 
-// A description of the expected outcome goes here
+3. Events, tasks that require you to start and end in a certain duration
+Format: ```Event [description of task] /from YYYY-MM-DD HHmm /to YYYY-MM-DD HHmm```
 
-```
-expected output
-```
+### Update a task 
+Update your tasks if you decided to change any details about it!
+You can change
+- the description of all 3 tasks type **[/name]**
+- the deadline **[/by]** of Deadline tasks
+- the start **[/from]** and end **[/to]** timing of Event tasks
 
-## Feature ABC
+Format: ```update [index of task] [field] [changed input]```
 
-// Feature details
+You will get a confirmation response from Charmie after the task has been added successfully.
 
+### Mark and unmark tasks
+Mark and unmark your tasks based on your progress.
 
-## Feature XYZ
+Mark - Format: ```mark [index of task]```
 
-// Feature details
+Unmark - Format: ```unmark [index of task]```
+
+Charmie will record your tasks status automatically for you.
+
+### Delete a task in the list 
+Delete any unwanted tasks
+
+Format: ```delete [index of task]```
+
+Once deleted, you will have to add the task back manually if you want to again.
+
+### View all task in one go
+See all the tasks you have and their current completion status
+
+Format: ```list```
+
+### Leave Charmie
+To leave Charmie when you're done managing your tasks of the day
+
+Format: ```bye```
