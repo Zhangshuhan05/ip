@@ -16,12 +16,19 @@ import javafx.scene.layout.VBox;
  * user input and displaying dialog exchanges between the user and Charmie.
  */
 public class MainWindow extends AnchorPane {
+    /** Scroll pane that contains the dialog messages and allows scrolling. */
     @FXML
     private ScrollPane scrollPane;
+
+    /** VBox container that holds all dialog boxes (user and Charmie messages). */
     @FXML
     private VBox dialogContainer;
+
+    /** TextField for user input. */
     @FXML
     private TextField userInput;
+
+    /** Button that sends user input to Charmie. */
     @FXML
     private Button sendButton;
 

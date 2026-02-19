@@ -84,13 +84,24 @@ public class Storage {
         return tasks;
     }
 
-
+    /**
+     * Reads lines from the given Scanner and adds valid tasks to the TaskList.
+     *
+     * @param tasks the TaskList to add tasks to
+     * @param s Scanner reading lines from the storage file
+     */
     private void loadTasks(TaskList tasks, Scanner s) {
         while (s.hasNextLine()) {
             addTaskIfValid(tasks, s.nextLine());
         }
     }
 
+    /**
+     * Parses a line from the storage file and adds it to the TaskList if valid.
+     *
+     * @param tasks the TaskList to add the task to
+     * @param line a line from the storage file representing a task
+     */
     private void addTaskIfValid(TaskList tasks, String line) {
         Task task = Parser.parseTaskFromFile(line);
         if (task != null) {
@@ -98,6 +109,4 @@ public class Storage {
         }
     }
 
-
 }
-

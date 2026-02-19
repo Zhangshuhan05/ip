@@ -6,24 +6,33 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
- * Child class Event represents an event task with a start and end date/time
- * */
+ * Represents an event task in Charmie with a description, start date/time, and end date/time.
+ * <p>
+ * Supports multiple input date/time formats: "yyyy-MM-dd HHmm", "yyyy-MM-dd",
+ * and ISO local date-time. Overrides Task methods to include start/end information
+ * in display and storage formats.
+ */
 public class Event extends Task {
+
+    /** Input date/time formats that are accepted when creating an Event. */
     private static final DateTimeFormatter[] INPUT_FORMATS = {
         DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
         DateTimeFormatter.ofPattern("yyyy-MM-dd"),
         DateTimeFormatter.ISO_LOCAL_DATE_TIME
     };
-    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy hh:mma");
 
+    /** Output format used for displaying the start and end date/times. */
+    private static final DateTimeFormatter OUTPUT_FORMAT =
+        DateTimeFormatter.ofPattern("MMM dd yyyy hh:mma");
+
+    /** Start date/time of the event. */
     protected LocalDateTime start;
+
+    /** End date/time of the event. */
     protected LocalDateTime end;
 
     /**
      * Constructs an Event task with a description, start date/time, and end date/time.
-     *
-     * Parses the provided start and end date/time strings into LocalDateTime objects.
-     * Supports multiple date/time formats: "yyyy-MM-dd HHmm", "yyyy-MM-dd", and ISO local date-time.
      *
      * @param description the description of the event task
      * @param start the start date/time as a string
@@ -36,6 +45,16 @@ public class Event extends Task {
         this.end = parseDateTime(end.trim());
     }
 
+    /**
+     * Parses a date/time string into a {@link LocalDateTime}.
+     * <p>
+     * Tries multiple formats and returns the first successful parse. If only a date
+     * is provided, the time defaults to start of day.
+     *
+     * @param input the date/time string to parse
+     * @return a LocalDateTime representing the parsed date/time
+     * @throws IllegalArgumentException if the input cannot be parsed in any supported format
+     */
     private static LocalDateTime parseDateTime(String input) {
         for (DateTimeFormatter formatter : INPUT_FORMATS) {
             try {
@@ -49,12 +68,16 @@ public class Event extends Task {
                 }
             }
         }
-
         throw new IllegalArgumentException(
             "Invalid date format! Use yyyy-MM-dd or yyyy-MM-dd HHmm");
     }
 
-
+    /**
+     * Returns the string representation of this Event task for display.
+     * Includes type "[E]", status, description, start, and end date/times.
+     *
+     * @return a string representing this Event task for display
+     */
     @Override
     public String getString() {
         return "[E]" + "[" + getStatusIcon() + "] " + description
@@ -62,12 +85,28 @@ public class Event extends Task {
             + " to: " + end.format(OUTPUT_FORMAT) + ")";
     }
 
+    /**
+     * Converts this Event task into a string suitable for saving to a file.
+     * Format: E | [done status] | [description] | [start] [end]
+     *
+     * @return a string representing this task for storage
+     */
     @Override
     public String saveToTaskList() {
         return "E | " + (isDone ? "1" : "0")
             + " | " + description + " | " + start + " " + end;
     }
 
+    /**
+     * Creates a new Event task with an updated field.
+     * <p>
+     * Supports updating "name" (description), "from" (start), or "to" (end).
+     *
+     * @param field the field to update ("name", "from", or "to")
+     * @param newValue the new value for the field
+     * @return a new Event task with the updated field
+     * @throws IllegalArgumentException if the field is invalid
+     */
     @Override
     public Task update(String field, String newValue) {
         switch (field.toLowerCase()) {
@@ -78,8 +117,8 @@ public class Event extends Task {
         case "to":
             return new Event(description, start.toString(), newValue);
         default:
-            throw new IllegalArgumentException("Invalid field! Valid fields are: description, start, end.");
+            throw new IllegalArgumentException(
+                "Invalid field! Valid fields are: description, start, end.");
         }
-
     }
 }

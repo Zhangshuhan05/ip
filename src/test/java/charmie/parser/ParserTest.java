@@ -1,6 +1,14 @@
 package charmie.parser;
 
-import charmie.command.*;
+import charmie.command.AddCommand;
+import charmie.command.Command;
+import charmie.command.DeleteCommand;
+import charmie.command.ExitCommand;
+import charmie.command.FindCommand;
+import charmie.command.ListCommand;
+import charmie.command.MarkCommand;
+import charmie.command.UnmarkCommand;
+import charmie.command.UpdateCommand;
 import charmie.exception.CharmieException;
 import charmie.task.Deadline;
 import charmie.task.Event;
@@ -112,20 +120,20 @@ public class ParserTest {
 
     @Test
     void testParseInvalidCommand() {
-        assertThrows(CharmieException.class,
-            () -> Parser.parse("invalid command"));
+        assertThrows(CharmieException.class, (
+        ) -> Parser.parse("invalid command"));
     }
 
     @Test
     void testDeleteInvalidIndex() {
-        assertThrows(CharmieException.class,
-            () -> Parser.parse("delete abc"));
+        assertThrows(CharmieException.class, (
+        ) -> Parser.parse("delete abc"));
     }
 
     @Test
     void testMarkMissingIndex() {
-        assertThrows(CharmieException.class,
-            () -> Parser.parse("mark "));
+        assertThrows(CharmieException.class, (
+            ) -> Parser.parse("mark "));
     }
 
     // ========================
@@ -134,20 +142,20 @@ public class ParserTest {
 
     @Test
     void testUpdateMissingSlash() {
-        assertThrows(CharmieException.class,
-            () -> Parser.parse("update 1 desc new"));
+        assertThrows(CharmieException.class, (
+        ) -> Parser.parse("update 1 desc new"));
     }
 
     @Test
     void testUpdateMissingField() {
-        assertThrows(CharmieException.class,
-            () -> Parser.parse("update 1 / new"));
+        assertThrows(CharmieException.class, (
+        ) -> Parser.parse("update 1 / new"));
     }
 
     @Test
     void testUpdateMissingValue() {
-        assertThrows(CharmieException.class,
-            () -> Parser.parse("update 1 /desc"));
+        assertThrows(CharmieException.class, (
+        ) -> Parser.parse("update 1 /desc"));
     }
 
     // ========================
@@ -397,7 +405,7 @@ public class ParserTest {
     }
 
     @Test
-    void testParseDeadlineWithISO8601Format() throws CharmieException {
+    void testParseDeadlineWithSpecialFormat() throws CharmieException {
         Command cmd = Parser.parse("deadline submit /by 2024-12-31T14:00:00");
         assertInstanceOf(AddCommand.class, cmd);
     }

@@ -1,12 +1,12 @@
 package charmie.storage;
 
+import java.io.File;
+import java.io.IOException;
+
 import charmie.task.TaskList;
 import charmie.task.ToDo;
 
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -213,7 +213,8 @@ public class StorageTest {
     @Test
     void testSaveToFileCreatesParentDirectories() throws IOException {
         String tempDir = System.getProperty("java.io.tmpdir");
-        String newPath = tempDir + File.separator + "charmie_test_" + System.currentTimeMillis() + File.separator + "test.txt";
+        String newPath = tempDir + File.separator + "charmie_test_"
+            + System.currentTimeMillis() + File.separator + "test.txt";
 
         Storage storage = new Storage(newPath);
 

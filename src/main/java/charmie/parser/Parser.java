@@ -1,7 +1,5 @@
 package charmie.parser;
 
-import javafx.util.Pair;
-
 import charmie.command.AddCommand;
 import charmie.command.Command;
 import charmie.command.DeleteCommand;
@@ -16,6 +14,7 @@ import charmie.task.Deadline;
 import charmie.task.Event;
 import charmie.task.Task;
 import charmie.task.ToDo;
+import javafx.util.Pair;
 
 /**
  * Parser for user input and file data in the Charmie application.
@@ -26,12 +25,24 @@ import charmie.task.ToDo;
  */
 public class Parser {
 
+    /**
+     * Extracts the first word (instruction) from a user input string.
+     *
+     * @param input the full user input string
+     * @return the instruction (first word) from the input
+     */
     public static String getInstruction(String input) {
         String[] split = input.trim().split(" ", 2);
 
         return split[0];
     }
 
+    /**
+     * Extracts the details part (everything after the first word) from user input.
+     *
+     * @param input the full user input string
+     * @return the details part of the input, or an empty string if none
+     */
     public static String getDetails(String input) {
         String[] split = input.trim().split(" ", 2);
         String details;
@@ -45,6 +56,13 @@ public class Parser {
         return details;
     }
 
+    /**
+     * Parses the task number (index) from the details string.
+     *
+     * @param details the input string containing the task number
+     * @return zero-based index of the task
+     * @throws CharmieException if the task number is missing, non-numeric, or <= 0
+     */
     private static int getIndex(String details) throws CharmieException {
         String trimmed = details.trim();
 
@@ -67,7 +85,19 @@ public class Parser {
         return index - 1;
     }
 
-
+    /**
+     * Parses an update command string to extract the field and its new value.
+     * <p>
+     * The expected format of the input string is:
+     * <pre>update [index] /[field] [value]</pre>
+     * where the field must start with a '/' and contain only alphanumeric characters.
+     *
+     * @param details the full command string containing the field and value to update
+     * @return a {@code Pair<String, String>} where the first element is the field name
+     *         (without the leading '/') and the second element is the value
+     * @throws CharmieException if the input format is invalid, the field is missing or contains
+     *         non-alphanumeric characters, or the value is empty
+     */
     private static Pair<String, String> getFieldAndValue(String details) throws CharmieException {
         String[] split = details.trim().split(" ", 3);
 
