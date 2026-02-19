@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 
 <fx:root alignment="TOP_RIGHT"
          maxHeight="1.7976931348623157E308"
@@ -13,7 +14,12 @@
          xmlns="http://javafx.com/javafx/17"
          xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Label fx:id="dialog" text="Label" wrapText="true" minHeight="-Infinity"/>
+        <!-- Wrap label in a StackPane to allow background and rounded corners for bubble -->
+        <StackPane fx:id="bubbleContainer" styleClass="bubble-container">
+            <children>
+                <Label fx:id="dialog" text="Label" wrapText="true" minHeight="-Infinity" styleClass="bubble-text" />
+            </children>
+        </StackPane>
         <ImageView fx:id="displayPicture" fitHeight="99.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true" />
     </children>
     <padding>

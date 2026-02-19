@@ -1,0 +1,30 @@
+/* Generic bubble container */
+.bubble-container {
+  -fx-background-color: transparent;
+}
+
+/* Bubble text base */
+.bubble-text {
+  -fx-background-color: #f0f0f0;
+  -fx-background-radius: 12;
+  -fx-padding: 10 12 10 12;
+  -fx-text-fill: #222;
+  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 6, 0.3, 0, 2);
+}
+
+/* User bubble (right side) */
+.user-bubble .bubble-text {
+  -fx-background-color: #DCF8C6; /* WhatsApp-like green */
+  -fx-text-fill: #000;
+}
+
+/* Bot bubble (left side) */
+.bot-bubble .bubble-text {
+  -fx-background-color: #ffffff;
+  -fx-text-fill: #000;
+}
+
+/* Optional: rounded HBox spacing */
+.hbox-spacing {
+  -fx-spacing: 10;
+}

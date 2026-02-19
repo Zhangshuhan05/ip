@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 
 /**
  * Represents a dialog box consisting of an ImageView to represent the speaker's face
@@ -23,6 +24,8 @@ public class DialogBox extends HBox {
     private Label dialog;
     @FXML
     private ImageView displayPicture;
+    @FXML
+    private StackPane bubbleContainer;
 
     private DialogBox(String text, Image img) {
         try {
@@ -33,6 +36,9 @@ public class DialogBox extends HBox {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        this.getStyleClass().add("hbox-spacing");
+        this.getStylesheets().add(MainWindow.class.getResource("/view/dialog.css").toExternalForm());
 
         dialog.setText(text);
         displayPicture.setImage(img);
@@ -49,13 +55,15 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        DialogBox db = new DialogBox(text, img);
+        db.getStyleClass().add("user-bubble");
+        return db;
     }
 
     public static DialogBox getDukeDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
+        db.getStyleClass().add("bot-bubble");
         return db;
     }
 }
-
