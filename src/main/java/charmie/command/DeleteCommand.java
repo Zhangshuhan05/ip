@@ -42,6 +42,10 @@ public class DeleteCommand extends Command {
      * @param storage The Storage instance used to save the updated task list.
      */
     public String run(TaskList tasks, Ui ui, Storage storage) {
+        if (index < 0 || index >= tasks.getSize()) {
+            return ui.showException(new IndexOutOfBoundsException("Task index out of bounds"));
+        }
+
         Task taskToDelete = tasks.getTask(index);
         tasks.removeTask(index);
 

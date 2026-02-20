@@ -45,6 +45,9 @@ public class TaskList {
      * @return the Task object that was marked as done
      */
     public Task markTask(int index) {
+        if (index < 0 || index >= list.size()) {
+            throw new IndexOutOfBoundsException("Task index out of bounds");
+        }
         Task task = getTask(index);
         task.markAsDone();
         return task;
@@ -57,6 +60,9 @@ public class TaskList {
      * @return the Task object that was unmarked
      */
     public Task unmarkTask(int index) {
+        if (index < 0 || index >= list.size()) {
+            throw new IndexOutOfBoundsException("Task index out of bounds");
+        }
         Task task = getTask(index);
         task.unMark();
         return task;

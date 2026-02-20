@@ -37,6 +37,10 @@ public class MarkCommand extends Command {
      */
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) {
+        if (index < 0 || index >= tasks.getSize()) {
+            return ui.showException(new IndexOutOfBoundsException("Task index out of bounds"));
+        }
+
         tasks.markTask(index);
 
         try {

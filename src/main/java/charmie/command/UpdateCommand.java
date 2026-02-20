@@ -42,6 +42,7 @@ public class UpdateCommand extends Command {
      */
     @Override
     public boolean isExit() {
+
         return false;
     }
 
@@ -58,6 +59,10 @@ public class UpdateCommand extends Command {
      */
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) {
+        if (index < 0 || index >= tasks.getSize()) {
+            return ui.showException(new IndexOutOfBoundsException("Task index out of bounds"));
+        }
+
         Task oldTask = tasks.getTask(index);
 
         try {
