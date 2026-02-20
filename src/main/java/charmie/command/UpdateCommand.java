@@ -60,7 +60,7 @@ public class UpdateCommand extends Command {
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) {
         if (index < 0 || index >= tasks.getSize()) {
-            return ui.showException(new IndexOutOfBoundsException("Task index out of bounds"));
+            return ui.showException(new IndexOutOfBoundsException("I can't find that task ;( Please enter a valid one."));
         }
 
         Task oldTask = tasks.getTask(index);

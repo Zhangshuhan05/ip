@@ -69,7 +69,7 @@ public class Event extends Task {
             }
         }
         throw new IllegalArgumentException(
-            "Invalid date format! Use yyyy-MM-dd or yyyy-MM-dd HHmm");
+            "PLease use [/from yyyy-MM-dd or yyyy-MM-dd HHmm /to yyyy-MM-dd or yyyy-MM-dd HHmm] for date/time inputs!");
     }
 
     /**
@@ -118,7 +118,7 @@ public class Event extends Task {
             return new Event(description, start.toString(), newValue);
         default:
             throw new IllegalArgumentException(
-                "Invalid field! Valid fields are: description, start, end.");
+                "Invalid field! Valid fields are: /name, /start, /end.");
         }
     }
 }

@@ -34,20 +34,27 @@ public class ToDo extends Task {
      */
     @Override
     public String saveToTaskList() {
+
         return "T | " + (isDone ? "1" : "0") + " | " + description;
     }
 
     /**
-     * Creates a new ToDo task with an updated field.
+     * Creates a new ToDo task with an updated description.
      * <p>
-     * For ToDo tasks, only the description can be updated; the completion status is reset.
+     * For ToDo tasks, only the description (/name) can be updated.
+     * The returned task is a new instance with completion status reset.
      *
-     * @param field the field to update (ignored for ToDo)
-     * @param newValue the new value for the field
+     * @param field the field to update; must be "/name"
+     * @param newValue the new description
      * @return a new ToDo task with the updated description
+     * @throws IllegalArgumentException if the field is invalid
      */
     @Override
     public Task update(String field, String newValue) {
+        if (!field.equals("/name")) {
+            throw new IllegalArgumentException("Invalid field! Valid field is: /name.");
+        }
         return new ToDo(newValue);
     }
+
 }

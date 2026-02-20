@@ -43,7 +43,7 @@ public class DeleteCommand extends Command {
      */
     public String run(TaskList tasks, Ui ui, Storage storage) {
         if (index < 0 || index >= tasks.getSize()) {
-            return ui.showException(new IndexOutOfBoundsException("Task index out of bounds"));
+            return ui.showException(new IndexOutOfBoundsException("I can't find that task ;( Please enter a valid one."));
         }
 
         Task taskToDelete = tasks.getTask(index);

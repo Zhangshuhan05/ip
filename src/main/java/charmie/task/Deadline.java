@@ -64,7 +64,7 @@ public class Deadline extends Task {
             }
         }
         throw new IllegalArgumentException(
-            "Invalid date format! Use yyyy-MM-dd or yyyy-MM-dd HHmm");
+            "PLease use [/by yyyy-MM-dd or yyyy-MM-dd HHmm] for date/time inputs");
     }
 
     /**
@@ -108,7 +108,7 @@ public class Deadline extends Task {
         case "by":
             return new Deadline(description, newValue);
         default:
-            throw new IllegalArgumentException("Invalid field for update: " + field);
+            throw new IllegalArgumentException("Invalid field! Valid fields are: /name, /by.");
         }
     }
 }
