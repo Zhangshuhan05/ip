@@ -1,6 +1,6 @@
 # Charmie User Guide
 
-![Screenshot of Charmie's interface](./Ui.png)
+![Screenshot of Charmie's interface](Ui.png)
 
 Charmie is friendly cat chatbot that helps you manages your tasks! It can:
 
