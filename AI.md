@@ -6,10 +6,14 @@ After writing the abstact parent class, copilot helped to complete some of the m
 While it saves a lot of time to write down the mundane information, the auto code completion sometimes gives the wrong names for the inputs or their method logic doesn't cover
 all cases that my methods need to address. So modifications have to be done after wards to ensure all logic works.
 
-I also used the help of ***ChatGPT*** to check the accuracy of my code.
+I used the help of ***ChatGPT*** to check the accuracy of my code.
 
 When I was adding an extension, the **update** feature, I wrote two helper methods, one for parsing the field to edit and one for the information to edit.
 After checking with ChatGPT, I realised a few mistakes in my loops that might lead to errors and was able to edit them in time. It also suggected that I combine the two helper
 methods into one, where instead of returning a String each, I return a Pair of Strings which was something I overlooked.
 I adopted the suggested code and it seems to work well. Based on my past experience generating code with ChatGPT, they give pretty good ideas for improving
 efficiency of code, but whether their logic will work is not guarenteed, so edits need to be done and their suggested code cannot be taken wholesale.
+
+I used the help of ***ChatGPT*** to write extra JUnit test cases.
+
+ChatGPT helped to craft a few more extra test cases that helps to cover some edge cases and test cases that I didn't think of. While it is really good for coming with all the possible scenarios, there are some test cases that needed me to modify it so it is based on my input formats. But some tests that did not pass was also really helpful in identifying loop holes in my bot.
