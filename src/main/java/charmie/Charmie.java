@@ -24,6 +24,7 @@ public class Charmie {
     private final Ui ui;
     private final Storage storage;
     private final TaskList tasks;
+    private boolean isExit = false;
 
     /**
      * Constructs a new Charmie chatbot instance.
@@ -101,7 +102,9 @@ public class Charmie {
     public String getResponse(String input) {
         try {
             Command c = Parser.parse(input);
-            return c.run(tasks, ui, storage);
+            String response = c.run(tasks, ui, storage);
+            isExit = c.isExit();
+            return response;
         } catch (CharmieException e) {
             return e.getMessage();
         }
@@ -110,6 +113,10 @@ public class Charmie {
     public String getWelcomeMessage() {
 
         return ui.welcomeMsg();
+    }
+
+    public boolean isExit() {
+        return isExit;
     }
 
     public static void main(String[] args) {

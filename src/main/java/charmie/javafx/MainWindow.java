@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.application.Platform;
 
 /**
  * Controller for the main GUI window.
@@ -78,6 +79,10 @@ public class MainWindow extends AnchorPane {
         );
 
         userInput.clear();
+
+        if (charmie.isExit()) {
+            Platform.exit();
+        }
     }
 }
 
